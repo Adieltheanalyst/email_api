@@ -13,19 +13,25 @@ import requests
 import re
 import os
 import csv
-import pandas as pd
+# import pandas as pd
 import json
 from datetime import datetime, timedelta
 from selenium.webdriver.common.keys import Keys
 from dotenv import load_dotenv
 # from fastapi import FastAPI, Query
 def get_email(username,password):
+    chrome_options=Options()
+    chrome_options.add_argument("--headless=new")
+    chrome_options.add_argument("--no-sandbox")
+    chrome_options.add_argument("--disable-dev-shm-usage")
+    chrome_options.add_argument("--window-size=1920,1080")
+
     service = Service(ChromeDriverManager().install())
-    driver=webdriver.Chrome(service=service)
+    driver=webdriver.Chrome(service=service, options=chrome_options)
     wait=WebDriverWait(driver,20)
 
     driver.get("https://provar.io/webmail")
-    time.sleep(20)
+    # time.sleep(20)
     username_btn=wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR,'#user')))
     username_btn.send_keys(username)
     time.sleep(3)
@@ -58,3 +64,5 @@ def get_email(username,password):
 
 username="forward2@provar.io"
 password='alaapassword'
+message=get_email(username,password)
+print(message)
