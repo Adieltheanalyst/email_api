@@ -1,2 +1,5 @@
 selenium 
 dotenv
+fastapi
+uvicorn
+webdriver-manager
